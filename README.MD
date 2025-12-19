@@ -74,4 +74,4 @@ Project ini dikembangkan untuk kebutuhan internal dan publik Dinas PUPR. Penggun
 
 ---
 
-> _"Membangun infrastruktur yang baik dimulai dari data yang aku
+> _"Membangun infrastruktur yang baik dimulai dari data yang akurat."
