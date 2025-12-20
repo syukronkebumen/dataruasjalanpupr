@@ -42,6 +42,45 @@ class DataRuasJalanController extends Controller
         
     }
 
+    public function batasWilayah()
+    {
+        $path = public_path('storage/geojson/batas_lamtim.geojson');
+        if (!file_exists($path)) {
+            return response()->json(['error' => 'File not found'], 404);
+        }
+
+        $geojson = file_get_contents($path);
+        $data = json_decode($geojson, true);
+
+        return response()->json($data);
+    }
+
+    public function batasKecamatan()
+    {
+        $path = public_path('storage/geojson/batas_kecamatan.geojson');
+        if (!file_exists($path)) {
+            return response()->json(['error' => 'File not found'], 404);
+        }
+
+        $geojson = file_get_contents($path);
+        $data = json_decode($geojson, true);
+
+        return response()->json($data);
+    }
+
+    public function batasKelurahan()
+    {
+        $path = public_path('storage/geojson/batas_kelurahan.geojson');
+        if (!file_exists($path)) {
+            return response()->json(['error' => 'File not found'], 404);
+        }
+
+        $geojson = file_get_contents($path);
+        $data = json_decode($geojson, true);
+
+        return response()->json($data);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

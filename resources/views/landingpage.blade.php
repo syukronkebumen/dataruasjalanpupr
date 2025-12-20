@@ -170,7 +170,52 @@
           maxZoom: 19
         }).addTo(map);
 
-        L.control.layers(baseLayers).addTo(map);
+        // Overlay Batas Wilayah Lampung Timur
+        const batasWilayahLamtim = L.geoJSON(null, {
+          style: function (feature) {
+            return {
+              color: '#2c3e50',
+              weight: 2,
+              fillColor: '#3498db',
+              fillOpacity: 0.1
+            };
+          }
+        });
+
+        const batasKecamatanLamtim = L.geoJSON(null, {
+          style: function (feature) {
+            return {
+              color: '#27ae60',
+              weight: 1,
+              fillColor: '#2ecc71',
+              fillOpacity: 0.1
+            };
+          }
+        });
+
+        const batasKelurahanLamtim = L.geoJSON(null, {
+          style: function (feature) {
+            return {
+              color: '#8e44ad',
+              weight: 1,
+              fillColor: '#9b59b6',
+              fillOpacity: 0.1
+            };
+          }
+        });
+
+        const overlays = {
+          "Batas Adm. Kabupaten": batasWilayahLamtim,
+          "Batas Adm. Kecamatan": batasKecamatanLamtim,
+          "Batas Adm. Kelurahan": batasKelurahanLamtim
+        };
+
+        L.control.layers(baseLayers, overlays, {
+          collapsed: true,
+          position: 'topright'
+        }).addTo(map);
+        
+        // L.control.layers(baseLayers).addTo(map);
 
         // Fetch road data from Excel
         // Show loading indicator
@@ -220,6 +265,27 @@
             // Remove loading indicator
             loadingIndicator.remove();
           });
+
+          fetch('/api/batas-wilayah')
+            .then(res => res.json())
+            .then(data => {
+              batasWilayahLamtim.addData(data);
+            })
+            .catch(err => console.error('Gagal load GeoJSON:', err));
+          
+          fetch('/api/batas-kecamatan')
+            .then(res => res.json())  
+            .then(data => {
+              batasKecamatanLamtim.addData(data);
+            })
+            .catch(err => console.error('Gagal load GeoJSON:', err));
+
+          fetch('/api/batas-kelurahan')
+            .then(res => res.json())  
+            .then(data => {
+              batasKelurahanLamtim.addData(data);
+            })
+            .catch(err => console.error('Gagal load GeoJSON:', err));
       </script>
 
       <div class="flex flex-col gap-2">
