@@ -190,6 +190,10 @@
               fillColor: '#2ecc71',
               fillOpacity: 0.1
             };
+          },
+          onEachFeature: function (feature, layer) {
+            layer.bindPopup(`
+              <div><strong>Kecamatan:</strong> ${feature.properties.nm_kecamatan}</div>`);
           }
         });
 
@@ -199,8 +203,12 @@
               color: '#8e44ad',
               weight: 1,
               fillColor: '#9b59b6',
-              fillOpacity: 0.1
+              fillOpacity: 0.2
             };
+          },
+          onEachFeature: function (feature, layer) {
+            layer.bindPopup(`
+              <div><strong>Kelurahan:</strong> ${feature.properties.nm_kelurahan}</div>`);
           }
         });
 
@@ -209,13 +217,12 @@
           "Batas Adm. Kecamatan": batasKecamatanLamtim,
           "Batas Adm. Kelurahan": batasKelurahanLamtim
         };
-
+        
         L.control.layers(baseLayers, overlays, {
           collapsed: true,
           position: 'topright'
         }).addTo(map);
         
-        // L.control.layers(baseLayers).addTo(map);
 
         // Fetch road data from Excel
         // Show loading indicator
@@ -278,7 +285,6 @@
             .then(data => {
               batasKecamatanLamtim.addData(data);
             })
-            .catch(err => console.error('Gagal load GeoJSON:', err));
 
           fetch('/api/batas-kelurahan')
             .then(res => res.json())  
