@@ -6,14 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class RuasJalan extends Model
 {
+    protected $table = 'tb_ruas_jln';
     protected $fillable = [
-        'name',
-        'panjang',
-        'fungsi',
-        'kecamatan',
+        'id_ruasjln',
+        'nama_ruasjln',
+        'panjang_jln',
+        'id_fungsijln',
+        'kec_jalan',
         'wilayah',
-        'no_ruas',
+        'no_ruasjln',
         'jumlah_titik',
-        'polyline'
+        'ruas_geom'
     ];
 }

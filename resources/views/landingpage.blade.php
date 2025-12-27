@@ -116,8 +116,8 @@
               <span class="material-symbols-outlined text-xl block">timeline</span>
             </span>
             <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Total Panjang</span>
-          </div>
-            <p class="text-3xl font-bold text-text-main">{{ number_format($datas->sum('panjang'), 0, ',', '.') }} <span class="text-lg text-text-muted font-normal">meter</span></p>
+            </div>
+            <p class="text-3xl font-bold text-text-main"> {{ number_format($totalPanjang / 1000, 2, ',', '.') }} <span class="text-lg text-text-muted font-normal">km</span></p>
           <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
             <div class="bg-primary h-1.5 rounded-full" style="width: 75%"></div>
           </div>
@@ -145,9 +145,9 @@
             <span class="bg-blue-50 p-1 rounded text-blue-500">
               <span class="material-symbols-outlined text-xl block">speed</span>
             </span>
-            <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Traffic Flow</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Indeks Kemantapan</span>
           </div>
-          <p class="text-3xl font-bold text-text-main">85% <span class="text-lg text-text-muted font-normal">capacity</span></p>
+          <p class="text-3xl font-bold text-text-main">{{ $indeksKemantapan }}% <span class="text-lg text-text-muted font-normal"></span></p>
           <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
             <div class="bg-blue-400 h-1.5 rounded-full" style="width: 85%"></div>
           </div>
@@ -160,9 +160,9 @@
             <span class="bg-purple-50 p-1 rounded text-purple-500">
               <span class="material-symbols-outlined text-xl block">check_circle</span>
             </span>
-            <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Condition Index</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Jalan Rusak</span>
           </div>
-          <p class="text-3xl font-bold text-text-main">4.2 <span class="text-lg text-text-muted font-normal">/ 5.0</span></p>
+          <p class="text-3xl font-bold text-text-main">{{ $totalJalanRusak }} km</span></p>
           <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
             <div class="bg-purple-400 h-1.5 rounded-full" style="width: 90%"></div>
           </div>
@@ -314,12 +314,12 @@
                 
                 bounds.push(...item.coords);
                 line.bindPopup(`
-                    <b>${item.name}</b><br>
-                    Panjang: ${item.panjang}<br>
-                    Fungsi: ${item.fungsi}<br>
-                    Kecamatan: ${item.kecamatan}<br>
+                    <b>${item.nama_ruasjln}</b><br>
+                    Panjang: ${item.panjang_jln}<br>
+                    Fungsi: ${item.id_fungsijln}<br>
+                    Kecamatan: ${item.kec_jalan}<br>
                     Wilayah: ${item.wilayah}<br>
-                    No Ruas: ${item.no_ruas}<br>
+                    No Ruas: ${item.no_ruasjln}<br>
                 `);
             });
             if (bounds.length > 0) {
@@ -404,15 +404,15 @@
               @foreach($datas as $item)
 
               <tr class="hover:bg-primary-light/30 transition-colors group cursor-pointer">
-                <td class="p-4 font-mono text-primary font-medium">{{ $item['id'] }}</td>
-                <td class="p-4 font-semibold text-text-main">{{ $item['name'] }}</td>
-                <td class="p-4 text-text-muted">{{ $item['panjang'] }}</td>
-                <td class="p-4 font-medium">{{ $item['fungsi'] }}</td>
-                <td class="p-4">{{ $item['kecamatan'] }}</td>
+                <td class="p-4 font-mono text-primary font-medium">{{ $item['id_ruasjln'] }}</td>
+                <td class="p-4 font-semibold text-text-main">{{ $item['nama_ruasjln'] }}</td>
+                <td class="p-4 text-text-muted">{{ $item['panjang_jln'] }}</td>
+                <td class="p-4 font-medium">{{ $item['id_fungsijln'] }}</td>
+                <td class="p-4">{{ $item['kec_jalan'] }}</td>
                 <td class="p-4">
                   <span class="px-2.5 py-1 rounded-md bg-green-50 text-green-600 border border-green-100 text-xs font-semibold">{{ $item['wilayah'] }}</span>
                 </td>
-                <td class="p-4 font-mono">{{ $item['no_ruas'] }}</td>
+                <td class="p-4 font-mono">{{ $item['no_ruasjln'] }}</td>
                 <td class="p-4 text-center">{{ $item['jumlah_titik'] }}</td>
               </tr>
               @endforeach

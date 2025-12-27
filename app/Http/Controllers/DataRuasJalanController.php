@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kemantapan;
 use App\Models\RuasJalan;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -16,7 +17,7 @@ class DataRuasJalanController extends Controller
         $data = RuasJalan::all();
         $final = $data->map(function ($item) {
 
-                $segments = preg_split('/\s+/', trim($item->polyline));
+                $segments = preg_split('/\s+/', trim($item->ruas_geom));
 
                 $coords = [];
                 foreach ($segments as $seg) {
@@ -27,13 +28,23 @@ class DataRuasJalanController extends Controller
                 }
 
                 return [
-                    'name' => $item->name,
-                    'panjang' => $item->panjang,
-                    'fungsi' => $item->fungsi,
-                    'kecamatan' => $item->kecamatan,
+                    // 'name' => $item->name,
+                    // 'panjang' => $item->panjang,
+                    // 'fungsi' => $item->fungsi,
+                    // 'kecamatan' => $item->kecamatan,
+                    // 'wilayah' => $item->wilayah,
+                    // 'no_ruas' => $item->no_ruas,
+                    // 'jumlah_titik' => $item->jumlah_titik,    
+                    // 'coords' => $coords,
+
+                    'id_ruasjln' => $item->id_ruasjln,
+                    'nama_ruasjln' => $item->nama_ruasjln,
+                    'panjang_jln' => $item->panjang_jln,
+                    'id_fungsijln' => $item->id_fungsijln,
+                    'kec_jalan' => $item->kec_jalan,
                     'wilayah' => $item->wilayah,
-                    'no_ruas' => $item->no_ruas,
-                    'jumlah_titik' => $item->jumlah_titik,    
+                    'no_ruasjln' => $item->no_ruasjln,
+                    'jumlah_titik' => $item->jumlah_titik,
                     'coords' => $coords
                 ];
             });
@@ -102,9 +113,16 @@ class DataRuasJalanController extends Controller
      */
     public function landingpage()
     {
-        $datas = RuasJalan::paginate(20);
+        $datas = RuasJalan::orderBy('no_ruasjln', 'ASC')->paginate(20);
+        $totalPanjang = RuasJalan::sum('panjang_jln');
+        $panjangJalanKM = $totalPanjang / 1000;
         $countRuasJalan = RuasJalan::count();
-        return view('landingpage', compact('datas','countRuasJalan'));
+
+        $kemantapan = Kemantapan::get();
+        $indeksKemantapan = (($kemantapan->sum('baik_km') + 0.5 * $kemantapan->sum('sedang_km')) / $panjangJalanKM) * 100;
+        $indeksKemantapan = round($indeksKemantapan);
+        $totalJalanRusak = $kemantapan->sum('rusak_ringan_km') + $kemantapan->sum('rusak_berat_km');
+        return view('landingpage', compact('datas','countRuasJalan','totalPanjang', 'kemantapan', 'indeksKemantapan','totalJalanRusak'));
     }
 
     /**
