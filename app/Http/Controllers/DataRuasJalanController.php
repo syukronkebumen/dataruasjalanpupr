@@ -103,7 +103,8 @@ class DataRuasJalanController extends Controller
     public function landingpage()
     {
         $datas = RuasJalan::paginate(20);
-        return view('landingpage', compact('datas'));
+        $countRuasJalan = RuasJalan::count();
+        return view('landingpage', compact('datas','countRuasJalan'));
     }
 
     /**
