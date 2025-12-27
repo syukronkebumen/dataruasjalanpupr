@@ -106,6 +106,69 @@
   </header>
   <main class="flex-1 flex justify-center py-8 px-4 lg:px-8">
     <div class="w-full max-w-[1400px] flex flex-col gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="flex flex-col gap-4 p-6 rounded-xl bg-surface shadow-card relative overflow-hidden group hover:shadow-md transition-shadow">
+          <div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+            <span class="material-symbols-outlined text-6xl text-primary">route</span>
+          </div>
+          <div class="flex items-center gap-2 text-primary">
+            <span class="bg-primary/10 p-1 rounded text-primary">
+              <span class="material-symbols-outlined text-xl block">timeline</span>
+            </span>
+            <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Total Panjang</span>
+          </div>
+            <p class="text-3xl font-bold text-text-main">{{ number_format($datas->sum('panjang'), 0, ',', '.') }} <span class="text-lg text-text-muted font-normal">meter</span></p>
+          <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
+            <div class="bg-primary h-1.5 rounded-full" style="width: 75%"></div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4 p-6 rounded-xl bg-surface shadow-card relative overflow-hidden group hover:shadow-md transition-shadow">
+          <div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+            <span class="material-symbols-outlined text-6xl text-orange-500">warning</span>
+          </div>
+          <div class="flex items-center gap-2 text-orange-500">
+            <span class="bg-orange-50 p-1 rounded text-orange-500">
+              <span class="material-symbols-outlined text-xl block">construction</span>
+            </span>
+            <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Ruas Jalan</span>
+          </div>
+          <p class="text-3xl font-bold text-text-main">{{ $countRuasJalan }} <span class="text-lg text-text-muted font-normal">ruas</span></p>
+          <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
+            <div class="bg-orange-400 h-1.5 rounded-full" style="width: 12%"></div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4 p-6 rounded-xl bg-surface shadow-card relative overflow-hidden group hover:shadow-md transition-shadow">
+          <div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+            <span class="material-symbols-outlined text-6xl text-blue-500">traffic</span>
+          </div>
+          <div class="flex items-center gap-2 text-blue-500">
+            <span class="bg-blue-50 p-1 rounded text-blue-500">
+              <span class="material-symbols-outlined text-xl block">speed</span>
+            </span>
+            <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Traffic Flow</span>
+          </div>
+          <p class="text-3xl font-bold text-text-main">85% <span class="text-lg text-text-muted font-normal">capacity</span></p>
+          <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
+            <div class="bg-blue-400 h-1.5 rounded-full" style="width: 85%"></div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4 p-6 rounded-xl bg-surface shadow-card relative overflow-hidden group hover:shadow-md transition-shadow">
+          <div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+            <span class="material-symbols-outlined text-6xl text-purple-500">verified</span>
+          </div>
+          <div class="flex items-center gap-2 text-purple-500">
+            <span class="bg-purple-50 p-1 rounded text-purple-500">
+              <span class="material-symbols-outlined text-xl block">check_circle</span>
+            </span>
+            <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Condition Index</span>
+          </div>
+          <p class="text-3xl font-bold text-text-main">4.2 <span class="text-lg text-text-muted font-normal">/ 5.0</span></p>
+          <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
+            <div class="bg-purple-400 h-1.5 rounded-full" style="width: 90%"></div>
+          </div>
+        </div>
+      </div>
+      
       <div class="flex flex-col xl:flex-row gap-6 justify-between items-start xl:items-end">
         <div class="flex flex-col gap-2">
           <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-text-main">Data Ruas Jalan</h1>
@@ -166,7 +229,7 @@
 
         // Set map center to Lampung Timur, Indonesia
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '© OpenStreetMap contributors',
+          attribution: '© diskominfo.lampungtimurkab.go.id',
           maxZoom: 19
         }).addTo(map);
 
@@ -257,7 +320,6 @@
                     Kecamatan: ${item.kecamatan}<br>
                     Wilayah: ${item.wilayah}<br>
                     No Ruas: ${item.no_ruas}<br>
-                    Jumlah Titik: ${item.jumlah_titik}<br>
                 `);
             });
             if (bounds.length > 0) {
@@ -365,69 +427,7 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="flex flex-col gap-4 p-6 rounded-xl bg-surface shadow-card relative overflow-hidden group hover:shadow-md transition-shadow">
-          <div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-            <span class="material-symbols-outlined text-6xl text-primary">route</span>
-          </div>
-          <div class="flex items-center gap-2 text-primary">
-            <span class="bg-primary/10 p-1 rounded text-primary">
-              <span class="material-symbols-outlined text-xl block">timeline</span>
-            </span>
-            <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Total Distance</span>
-          </div>
-          <p class="text-3xl font-bold text-text-main">12,450 <span class="text-lg text-text-muted font-normal">km</span></p>
-          <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
-            <div class="bg-primary h-1.5 rounded-full" style="width: 75%"></div>
-          </div>
-        </div>
-        <div class="flex flex-col gap-4 p-6 rounded-xl bg-surface shadow-card relative overflow-hidden group hover:shadow-md transition-shadow">
-          <div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-            <span class="material-symbols-outlined text-6xl text-orange-500">warning</span>
-          </div>
-          <div class="flex items-center gap-2 text-orange-500">
-            <span class="bg-orange-50 p-1 rounded text-orange-500">
-              <span class="material-symbols-outlined text-xl block">construction</span>
-            </span>
-            <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Needs Repair</span>
-          </div>
-          <p class="text-3xl font-bold text-text-main">142 <span class="text-lg text-text-muted font-normal">segments</span></p>
-          <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
-            <div class="bg-orange-400 h-1.5 rounded-full" style="width: 12%"></div>
-          </div>
-        </div>
-        <div class="flex flex-col gap-4 p-6 rounded-xl bg-surface shadow-card relative overflow-hidden group hover:shadow-md transition-shadow">
-          <div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-            <span class="material-symbols-outlined text-6xl text-blue-500">traffic</span>
-          </div>
-          <div class="flex items-center gap-2 text-blue-500">
-            <span class="bg-blue-50 p-1 rounded text-blue-500">
-              <span class="material-symbols-outlined text-xl block">speed</span>
-            </span>
-            <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Traffic Flow</span>
-          </div>
-          <p class="text-3xl font-bold text-text-main">85% <span class="text-lg text-text-muted font-normal">capacity</span></p>
-          <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
-            <div class="bg-blue-400 h-1.5 rounded-full" style="width: 85%"></div>
-          </div>
-        </div>
-        <div class="flex flex-col gap-4 p-6 rounded-xl bg-surface shadow-card relative overflow-hidden group hover:shadow-md transition-shadow">
-          <div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-            <span class="material-symbols-outlined text-6xl text-purple-500">verified</span>
-          </div>
-          <div class="flex items-center gap-2 text-purple-500">
-            <span class="bg-purple-50 p-1 rounded text-purple-500">
-              <span class="material-symbols-outlined text-xl block">check_circle</span>
-            </span>
-            <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Condition Index</span>
-          </div>
-          <p class="text-3xl font-bold text-text-main">4.2 <span class="text-lg text-text-muted font-normal">/ 5.0</span></p>
-          <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
-            <div class="bg-purple-400 h-1.5 rounded-full" style="width: 90%"></div>
-          </div>
-        </div>
-      </div>
-      
+          
       
       <div class="w-full h-48 rounded-2xl overflow-hidden relative border border-border-light mt-4 shadow-card">
         <div class="absolute inset-0 bg-cover bg-center transition-all duration-700 hover:scale-105" data-alt="Map view showing road networks with heatmaps overlaid on city streets" data-location="Toronto" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuASDfGZvelAlpriNvt4bHUkbl4dq0R-H-FiVJ4mUpc05kjh5YmFvLhl1sNDEQa1qpGRj4TOjUDEfJgEXHrYXXYfOIeN8s8aHF29G7Jh0TrxTb3t1nhb7okwzgapU3j4GHXxkmzHjLdU2bZdM9qyqTyXRoV66U9rXuDf1zvuj3mnNVEvVIEmV3Yu5PdYiXzzOo7mXsHraKn-IEn5iXkVEZ-fJsbvCHQEMZeFg81JED4eq-kvSII3MCzbvrtTcwFUo5IC9WA7tFBXxw_U");'>
