@@ -4,6 +4,7 @@ use App\Http\Controllers\DataRuasJalanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/ruasjalan', [DataRuasJalanController::class, 'index']);
+Route::get('/ruasjalan/detail/{id}', [DataRuasJalanController::class, 'ruasDetail']);
 Route::get('/batas-wilayah', [DataRuasJalanController::class, 'batasWilayah']);
 Route::get('/batas-kecamatan', [DataRuasJalanController::class, 'batasKecamatan']);
 Route::get('/batas-kelurahan', [DataRuasJalanController::class, 'batasKelurahan']);

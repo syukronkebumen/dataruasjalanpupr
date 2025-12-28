@@ -53,6 +53,29 @@ class DataRuasJalanController extends Controller
         
     }
 
+    public function ruasDetail($id)
+    {
+        $item = RuasJalan::where('id_ruasjln', $id)->first();
+
+        if (!$item) {
+            return response()->json(['error' => 'Ruas Jalan not found'], 404);
+        }
+        $segments = preg_split('/\s+/', trim($item->ruas_geom));
+
+        $result = [
+            'id_ruasjln' => $item->id_ruasjln,
+            'nama_ruasjln' => $item->nama_ruasjln,
+            'panjang_jln' => $item->panjang_jln,
+            'id_fungsijln' => $item->id_fungsijln,
+            'kec_jalan' => $item->kec_jalan,
+            'wilayah' => $item->wilayah,
+            'no_ruasjln' => $item->no_ruasjln,
+            'jumlah_titik' => $item->jumlah_titik,
+            'coords' => $segments
+        ];
+        return response()->json($result);
+    }
+
     public function batasWilayah()
     {
         $path = public_path('storage/geojson/batas_lamtim.geojson');
@@ -122,7 +145,13 @@ class DataRuasJalanController extends Controller
         $indeksKemantapan = (($kemantapan->sum('baik_km') + 0.5 * $kemantapan->sum('sedang_km')) / $panjangJalanKM) * 100;
         $indeksKemantapan = round($indeksKemantapan);
         $totalJalanRusak = $kemantapan->sum('rusak_ringan_km') + $kemantapan->sum('rusak_berat_km');
-        return view('landingpage', compact('datas','countRuasJalan','totalPanjang', 'kemantapan', 'indeksKemantapan','totalJalanRusak'));
+        return view('contentlanding', compact('datas','countRuasJalan','totalPanjang', 'kemantapan', 'indeksKemantapan','totalJalanRusak'));
+    }
+
+    public function detail($id)
+    {
+        $data = RuasJalan::where('id_ruasjln', $id)->first();
+        return view('detail.index', compact('data'));
     }
 
     /**
