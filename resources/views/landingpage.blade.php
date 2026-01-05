@@ -85,9 +85,13 @@
           <h2 class="text-text-main text-xl font-bold tracking-tight">PUPR</h2>
         </div>
         <nav class="hidden md:flex items-center gap-8 pl-4">
-          <a class="text-primary text-sm font-semibold bg-primary-light px-3 py-1.5 rounded-full" href="#">Dashboard</a>
-          <a class="text-text-muted hover:text-primary transition-colors text-sm font-medium" href="#">Reports</a>
-          <a class="text-text-muted hover:text-primary transition-colors text-sm font-medium" href="#">Settings</a>
+          @php
+            $currentRoute = Route::currentRouteName();
+          @endphp
+          <a class="text-sm font-semibold px-3 py-1.5 rounded-full transition-colors {{ $currentRoute === 'landingpage' ? 'text-primary bg-primary-light' : 'text-text-muted hover:text-primary' }}" href="/">Beranda</a>
+          <a class="text-sm font-medium px-3 py-1.5 rounded-full transition-colors {{ $currentRoute === 'jembatan' ? 'text-primary bg-primary-light' : 'text-text-muted hover:text-primary' }}" href="{{ route('jembatan') }}">Jembatan</a>
+          <a class="text-sm font-medium px-3 py-1.5 rounded-full transition-colors href="#">Reports</a>
+          <a class="text-sm font-medium px-3 py-1.5 rounded-full transition-colors href="#">Settings</a>
         </nav>
       </div>
       <div class="flex items-center gap-6">

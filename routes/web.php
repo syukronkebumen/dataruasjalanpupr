@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DataRuasJalanController;
+use App\Http\Controllers\JembatanController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -11,8 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DataRuasJalanController::class, 'landingpage'])->name('landingpage');
 Route::get('/detail/{id}', [DataRuasJalanController::class, 'detail'])->name('detail');
-
-
+Route::get('/jembatan', [JembatanController::class, 'index'])->name('jembatan');
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
