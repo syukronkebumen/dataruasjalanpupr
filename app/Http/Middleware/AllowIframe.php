@@ -16,7 +16,11 @@ class AllowIframe
     public function handle(Request $request, Closure $next): Response
     {
         $response = $next($request);
-        $response->header('X-Frame-Options', 'ALLOWALL');
+        $response->headers->remove('X-Frame-Options');
+        $response->headers->set(
+            'Content-Security-Policy',
+            "frame-ancestors *;"
+        );
         return $response;
     }
 }
