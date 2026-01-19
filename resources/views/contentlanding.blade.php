@@ -12,7 +12,7 @@
         </span>
         <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Total Panjang</span>
         </div>
-        <p class="text-3xl font-bold text-text-main"> {{ number_format($totalPanjang / 1000, 2, ',', '.') }} <span class="text-lg text-text-muted font-normal">km</span></p>
+        <p class="text-3xl font-bold text-text-main"> {{ $totalPanjangFull }} <span class="text-lg text-text-muted font-normal">km</span></p>
         <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
         <div class="bg-primary h-1.5 rounded-full" style="width: 75%"></div>
         </div>
@@ -55,9 +55,9 @@
         <span class="bg-purple-50 p-1 rounded text-purple-500">
             <span class="material-symbols-outlined text-xl block">check_circle</span>
         </span>
-        <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Jalan Rusak</span>
+        <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Jalan Baik</span>
         </div>
-        <p class="text-3xl font-bold text-text-main">{{ $totalJalanRusak }} km</span></p>
+        <p class="text-3xl font-bold text-text-main">{{ $totalJalanBaik }} km</span></p>
         <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
         <div class="bg-purple-400 h-1.5 rounded-full" style="width: 90%"></div>
         </div>

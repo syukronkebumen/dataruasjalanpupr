@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kemantapan;
+use App\Models\KetMantap;
 use App\Models\RuasJalan;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -142,10 +143,19 @@ class DataRuasJalanController extends Controller
         $countRuasJalan = RuasJalan::count();
 
         $kemantapan = Kemantapan::get();
-        $indeksKemantapan = (($kemantapan->sum('baik_km') + 0.5 * $kemantapan->sum('sedang_km')) / $panjangJalanKM) * 100;
-        $indeksKemantapan = round($indeksKemantapan);
-        $totalJalanRusak = $kemantapan->sum('rusak_ringan_km') + $kemantapan->sum('rusak_berat_km');
-        return view('contentlanding', compact('datas','countRuasJalan','totalPanjang', 'kemantapan', 'indeksKemantapan','totalJalanRusak'));
+        $getKemantapan = KetMantap::where('jenis_mantap', "Kemantapan Jalan")->first();
+        $indeksKemantapan = $getKemantapan->mantap_persen;
+        $totalPanjangFull = $getKemantapan->panjang_full;
+
+        $totalJalanBaik = $kemantapan->sum('baik_km') + $kemantapan->sum('sedang_km');
+        return view('contentlanding', compact(
+            'datas',
+            'countRuasJalan',
+            'kemantapan', 
+            'indeksKemantapan',
+            'totalJalanBaik',
+            'totalPanjangFull'
+        ));
     }
 
     public function detail($id)
