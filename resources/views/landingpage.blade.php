@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Road Segment Data Display</title>
+  <title>SIJJ - Sistem Informasi Jalan & Jembatan</title>
   <link href="https://fonts.googleapis.com" rel="preconnect" />
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
   <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet" />
@@ -80,15 +80,17 @@
       <div class="flex items-center gap-8">
         <div class="flex items-center gap-2 text-primary">
           <div class="bg-primary/10 p-1.5 rounded-lg">
-            <span class="material-symbols-outlined text-3xl">add_road</span>
+            <a href="/" class="text-primary hover:text-primary-dark transition-colors">
+              <span class="material-symbols-outlined text-3xl">add_road</span>
+            </a>
           </div>
-          <h2 class="text-text-main text-xl font-bold tracking-tight">PUPR</h2>
+          <h2 class="text-text-main text-xl font-bold tracking-tight">SIJJ</h2>
         </div>
         <nav class="hidden md:flex items-center gap-8 pl-4">
           @php
             $currentRoute = Route::currentRouteName();
           @endphp
-          <a class="text-sm font-semibold px-3 py-1.5 rounded-full transition-colors {{ $currentRoute === 'landingpage' ? 'text-primary bg-primary-light' : 'text-text-muted hover:text-primary' }}" href="/">Beranda</a>
+          <a class="text-sm font-semibold px-3 py-1.5 rounded-full transition-colors {{ $currentRoute === 'landingpage' ? 'text-primary bg-primary-light' : 'text-text-muted hover:text-primary' }}" href="{{ route('landingpage') }}">Ruas Jalan</a>
           <a class="text-sm font-medium px-3 py-1.5 rounded-full transition-colors {{ $currentRoute === 'jembatan' ? 'text-primary bg-primary-light' : 'text-text-muted hover:text-primary' }}" href="{{ route('jembatan') }}">Jembatan</a>
           <a class="text-sm font-medium px-3 py-1.5 rounded-full transition-colors href="#">Reports</a>
           <a class="text-sm font-medium px-3 py-1.5 rounded-full transition-colors href="#">Settings</a>

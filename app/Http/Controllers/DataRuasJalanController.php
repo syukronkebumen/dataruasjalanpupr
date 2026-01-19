@@ -158,6 +158,11 @@ class DataRuasJalanController extends Controller
         ));
     }
 
+    public function homepage()
+    {
+        return view('homepage');
+    }
+
     public function detail($id)
     {
         $data = RuasJalan::where('id_ruasjln', $id)->first();

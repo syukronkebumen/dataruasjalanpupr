@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Route;
 //     return view('landingpage');
 // });
 
-Route::get('/', [DataRuasJalanController::class, 'landingpage'])->name('landingpage');
+Route::get('/ruasjalan', [DataRuasJalanController::class, 'landingpage'])->name('landingpage');
+Route::get('/', [DataRuasJalanController::class, 'homepage'])->name('homepage');
 Route::get('/detail/{id}', [DataRuasJalanController::class, 'detail'])->name('detail');
 Route::get('/jembatan', [JembatanController::class, 'index'])->name('jembatan');
 Auth::routes();
