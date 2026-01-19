@@ -200,7 +200,7 @@
     <!-- Header -->
     <header>
         <nav>
-            <div class="logo">🛣️ SIJJ</div>
+            <div class="logo"><a href="#hero" style="text-decoration: none;">🛣️</a> SIJJ</div>
             <ul class="nav-links">
                 <li><a href="#fitur">Fitur</a></li>
                 <li><a href="#statistik">Statistik</a></li>
@@ -210,7 +210,7 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="hero">
         <div class="hero-content">
             <h1>Sistem Informasi Jalan & Jembatan</h1>
             <p>Kelola dan pantau semua data infrastruktur jalan dan jembatan dengan sistem terpadu yang efisien dan akurat</p>

@@ -84,7 +84,7 @@
                 </div>
             </div>
             <div class="flex gap-3 pt-4 border-t border-border-light mt-4">
-                <a href="/" class="flex items-center gap-2 h-10 px-5 rounded-full bg-white border border-border-light text-text-main hover:bg-surface-highlight hover:border-gray-300 transition-all text-sm font-medium shadow-sm">
+                <a href="/ruasjalan" class="flex items-center gap-2 h-10 px-5 rounded-full bg-white border border-border-light text-text-main hover:bg-surface-highlight hover:border-gray-300 transition-all text-sm font-medium shadow-sm">
                     <span class="material-symbols-outlined text-[18px]">arrow_back</span>
                     Kembali
                 </a>
@@ -525,7 +525,7 @@
         <div class="flex flex-col gap-4 max-w-lg">
             <h3 class="text-2xl font-bold text-text-main">Detail Ruas Jalan</h3>
             <p class="text-text-muted font-medium">Lihat statistik lengkap, kondisi jalan, dan data pemeliharaan untuk ruas jalan {{ $data->nama_ruasjln }} di wilayah {{ $data->kec_jalan }}.</p>
-            <a href="/" class="w-fit flex items-center gap-2 px-5 py-2.5 rounded-full bg-white hover:bg-gray-50 text-primary border border-primary/20 hover:border-primary/50 shadow-sm transition-all text-sm font-bold">
+            <a href="/ruasjalan" class="w-fit flex items-center gap-2 px-5 py-2.5 rounded-full bg-white hover:bg-gray-50 text-primary border border-primary/20 hover:border-primary/50 shadow-sm transition-all text-sm font-bold">
                 <span class="material-symbols-outlined">arrow_back</span>
                 Kembali ke Daftar
             </a>
