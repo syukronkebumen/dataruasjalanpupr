@@ -12,3 +12,4 @@ Route::get('/batas-kelurahan', [DataRuasJalanController::class, 'batasKelurahan'
 
 // Jembatan
 Route::get('/jembatan/list', [JembatanController::class, 'list']);
+Route::get('/jembatan/search', [JembatanController::class, 'search']);

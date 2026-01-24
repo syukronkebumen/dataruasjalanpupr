@@ -39,6 +39,24 @@ class JembatanController extends Controller
         ));
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+         $dataJembatan = Jembatan::leftjoin('tb_kemantapan_jemb', 'tb_jemb.no_jemb', '=', 'tb_kemantapan_jemb.no_jemb')
+                        ->select('tb_jemb.*', 
+                            'tb_kemantapan_jemb.panjang_meter',
+                            'tb_kemantapan_jemb.lebar_meter',
+                            'tb_kemantapan_jemb.tipe_lantai',
+                            'tb_kemantapan_jemb.kondisi_jemb'
+                            );
+        $data = $dataJembatan->where('nama_jemb', 'LIKE', "%{$query}%")
+                ->orWhere('nama_ruas_jemb', 'LIKE', "%{$query}%")
+                ->get();
+
+        return response()->json($data);
+    }
+
     public function list()
     {
         $data = Jembatan::all();
@@ -112,4 +130,6 @@ class JembatanController extends Controller
     {
         //
     }
+
+    
 }

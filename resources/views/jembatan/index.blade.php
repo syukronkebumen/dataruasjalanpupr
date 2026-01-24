@@ -386,7 +386,8 @@
     </div>
     <div class="w-full lg:w-auto flex items-center bg-gray-50 rounded-full px-3 h-10 border border-transparent focus-within:border-primary focus-within:bg-white focus-within:shadow-sm mx-2 lg:mx-0 transition-all">
         <span class="material-symbols-outlined text-text-muted text-[20px]">filter_list</span>
-        <input class="bg-transparent border-none text-sm text-text-main placeholder-text-muted focus:ring-0 w-full lg:w-64 h-full" placeholder="Cari nama jembatan atau ruas..." type="text" />
+        <input class="bg-transparent border-none text-sm text-text-main placeholder-text-muted focus:ring-0 w-full lg:w-64 h-full" placeholder="Cari nama jembatan atau ruas..." type="text" id="searchInput" />
+        
     </div>
 </div>
 
@@ -404,7 +405,7 @@
                     <th class="p-4 whitespace-nowrap">Kondisi Jembatan</th>
                 </tr>
             </thead>
-            <tbody class="text-text-main text-sm divide-y divide-border-light">
+            <tbody id="jembatanTable" class="text-text-main text-sm divide-y divide-border-light">
                 @foreach ($datas as $jembatan)
                 <tr class="hover:bg-gray-50/50 transition-colors">
                     <td class="p-4 whitespace-nowrap">
@@ -430,3 +431,49 @@
 
 </div>
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+
+    $('#searchInput').on('keyup', function() {
+        var query = $(this).val();
+        console.log('Searching for:', query);
+        $.ajax({
+        url: '/api/jembatan/search',
+        method: 'GET',
+        data: { query: query },
+        success: function(data) {
+            // Update the table with the search results
+            // Assuming you have a function to update the table
+            updateTable(data);
+        },
+        error: function() {
+            console.error('Error fetching search results');
+        }
+        });
+    });
+    });
+
+    function updateTable(data) {
+    // Clear existing rows
+    $('tbody#jembatanTable').empty();
+    // Append new rows based on the search results
+    data.forEach(function(jembatan) {
+        $('tbody#jembatanTable').append(`
+        <tr class="hover:bg-gray-50/50 transition-colors">
+            <td class="p-4 whitespace-nowrap">
+            <button class="text-blue-500 hover:underline font-medium">Detail</button>
+            </td>
+            <td class="p-4 whitespace-nowrap">${jembatan.nama_jemb}</td>
+            <td class="p-4 whitespace-nowrap">${jembatan.nama_ruas_jemb}</td>
+            <td class="p-4 whitespace-nowrap">${jembatan.panjang_meter}</td>
+            <td class="p-4 whitespace-nowrap">${jembatan.lebar_meter}</td>
+            <td class="p-4 whitespace-nowrap">${jembatan.tipe_lantai}</td>
+            <td class="p-4 whitespace-nowrap">${jembatan.kondisi_jemb}</td>
+        </tr>
+        `);
+    });
+    }
+</script>
