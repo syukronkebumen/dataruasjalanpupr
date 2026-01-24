@@ -1,7 +1,38 @@
 @extends('landingpage')
 
 @section('content')
-
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
+    <div class="flex flex-col gap-4 p-6 rounded-xl bg-surface shadow-card relative overflow-hidden group hover:shadow-md transition-shadow">
+        <div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+            <span class="material-symbols-outlined text-6xl text-primary">route</span>
+        </div>
+        <div class="flex items-center gap-2 text-primary">
+            <span class="bg-primary/10 p-1 rounded text-primary">
+                <span class="material-symbols-outlined text-xl block">timeline</span>
+            </span>
+            <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Jumlah Jembatan</span>
+        </div>
+        <p class="text-3xl font-bold text-text-main"> {{ $totalJembatan }} <span class="text-lg text-text-muted font-normal">buah</span></p>
+        <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
+            <div class="bg-primary h-1.5 rounded-full" style="width: 75%"></div>
+        </div>
+    </div>
+    <div class="flex flex-col gap-4 p-6 rounded-xl bg-surface shadow-card relative overflow-hidden group hover:shadow-md transition-shadow">
+        <div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+            <span class="material-symbols-outlined text-6xl text-blue-500">traffic</span>
+        </div>
+        <div class="flex items-center gap-2 text-blue-500">
+            <span class="bg-blue-50 p-1 rounded text-blue-500">
+                <span class="material-symbols-outlined text-xl block">speed</span>
+            </span>
+            <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Indeks Kemantapan Jembatan</span>
+        </div>
+        <p class="text-3xl font-bold text-text-main">{{ $indeksKemantapan }}% <span class="text-lg text-text-muted font-normal"></span></p>
+        <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
+            <div class="bg-blue-400 h-1.5 rounded-full" style="width: 85%"></div>
+        </div>
+    </div>
+</div>
 
 <div class="flex flex-col xl:flex-row gap-6 justify-between items-start xl:items-end">
     <div class="flex flex-col gap-2">
@@ -340,7 +371,7 @@
 <div class="flex flex-col lg:flex-row gap-4 justify-between items-center bg-surface border border-border-light p-2 rounded-xl shadow-sm">
     <div class="flex gap-2 overflow-x-auto w-full lg:w-auto px-2 pb-2 lg:pb-0 scrollbar-hide">
         <button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary text-white px-4 text-sm font-semibold shadow-sm transition-transform active:scale-95">
-            <span>All Segments</span>
+            <span>Semua</span>
         </button>
         <button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white border border-border-light hover:bg-gray-50 text-text-muted hover:text-text-main px-4 text-sm transition-colors">
             <span>High Priority</span>
@@ -357,7 +388,7 @@
     </div>
     <div class="w-full lg:w-auto flex items-center bg-gray-50 rounded-full px-3 h-10 border border-transparent focus-within:border-primary focus-within:bg-white focus-within:shadow-sm mx-2 lg:mx-0 transition-all">
         <span class="material-symbols-outlined text-text-muted text-[20px]">filter_list</span>
-        <input class="bg-transparent border-none text-sm text-text-main placeholder-text-muted focus:ring-0 w-full lg:w-64 h-full" placeholder="Filter by keywords..." type="text" />
+        <input class="bg-transparent border-none text-sm text-text-main placeholder-text-muted focus:ring-0 w-full lg:w-64 h-full" placeholder="Cari nama jembatan atau ruas..." type="text" />
     </div>
 </div>
 
@@ -367,17 +398,27 @@
             <thead>
                 <tr class="bg-gray-50/80 border-b border-border-light text-text-muted text-xs uppercase tracking-wider font-semibold">
                     <th class="p-4 whitespace-nowrap">Aksi</th>
-                    <th class="p-4 whitespace-nowrap">Nama</th>
+                    <th class="p-4 whitespace-nowrap">Nama Jembatan</th>
+                    <th class="p-4 whitespace-nowrap">Ruas</th>
                     <th class="p-4 whitespace-nowrap">Panjang (m)</th>
-                    <th class="p-4 whitespace-nowrap">Fungsi</th>
-                    <th class="p-4 whitespace-nowrap">Kecamatan</th>
-                    <th class="p-4 whitespace-nowrap">Wilayah</th>
-                    <th class="p-4 whitespace-nowrap">No Ruas</th>
-                    <th class="p-4 whitespace-nowrap">Jumlah Titik</th>
+                    <th class="p-4 whitespace-nowrap">Lebar (m)</th>
+                    <th class="p-4 whitespace-nowrap">Tipe Lantai</th>
+                    <th class="p-4 whitespace-nowrap">Kondisi Jembatan</th>
                 </tr>
             </thead>
             <tbody class="text-text-main text-sm divide-y divide-border-light">
-
+                @foreach ($datas as $jembatan)
+                <tr class="hover:bg-gray-50/50 transition-colors">
+                    <td class="p-4 whitespace-nowrap">
+                        <button class="text-blue-500 hover:underline font-medium">Detail</button>
+                    </td>
+                    <td class="p-4 whitespace-nowrap">{{ $jembatan->nama_jemb }}</td>
+                    <td class="p-4 whitespace-nowrap">{{ $jembatan->nama_ruas_jemb }}</td>
+                    <td class="p-4 whitespace-nowrap">{{ $jembatan->panjang_meter }}</td>
+                    <td class="p-4 whitespace-nowrap">{{ $jembatan->lebar_meter }}</td>
+                    <td class="p-4 whitespace-nowrap">{{ $jembatan->tipe_lantai }}</td>
+                    <td class="p-4 whitespace-nowrap">{{ $jembatan->kondisi_jemb }}</td>
+                @endforeach
             </tbody>
         </table>
     </div>

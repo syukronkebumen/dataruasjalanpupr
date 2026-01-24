@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jembatan;
+use App\Models\KetMantap;
 use Illuminate\Http\Request;
 
 class JembatanController extends Controller
@@ -12,7 +13,28 @@ class JembatanController extends Controller
      */
     public function index()
     {
-        return view('jembatan.index');
+        $isWhere = "Kemantapan Jembatan";
+        $dataJembatan = Jembatan::leftjoin('tb_kemantapan_jemb', 'tb_jemb.no_jemb', '=', 'tb_kemantapan_jemb.no_jemb')
+                        ->select('tb_jemb.*', 
+                            'tb_kemantapan_jemb.panjang_meter',
+                            'tb_kemantapan_jemb.lebar_meter',
+                            'tb_kemantapan_jemb.tipe_lantai',
+                            'tb_kemantapan_jemb.kondisi_jemb'
+                            );
+
+        $datas = $dataJembatan->paginate(10);
+        $dataJembatan = $dataJembatan->count();
+        $totalJembatan = $dataJembatan;
+
+        $getKemantapan = KetMantap::where('jenis_mantap', $isWhere)->first();
+        $indeksKemantapan = $getKemantapan->mantap_persen;
+
+
+        return view('jembatan.index', compact(
+            'datas',
+            'totalJembatan',
+            'indeksKemantapan'
+        ));
     }
 
     public function list()
