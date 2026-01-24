@@ -55,6 +55,43 @@ class DataRuasJalanController extends Controller
         
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $data = RuasJalan::where('nama_ruasjln', 'LIKE', "%{$query}%")
+            ->orWhere('kec_jalan', 'LIKE', "%{$query}%")
+            ->orWhere('wilayah', 'LIKE', "%{$query}%")
+            ->get();
+
+        $final = $data->map(function ($item) {
+
+            $segments = preg_split('/\s+/', trim($item->ruas_geom));
+
+            $coords = [];
+            foreach ($segments as $seg) {
+                if (str_contains($seg, ',')) {
+                    [$lat, $lng] = explode(',', $seg);
+                    $coords[] = [(float)$lat, (float)$lng];
+                }
+            }
+
+            return [
+                'id_ruasjln' => $item->id_ruasjln,
+                'nama_ruasjln' => $item->nama_ruasjln,
+                'panjang_jln' => $item->panjang_jln,
+                'id_fungsijln' => $item->id_fungsijln,
+                'kec_jalan' => $item->kec_jalan,
+                'wilayah' => $item->wilayah,
+                'no_ruasjln' => $item->no_ruasjln,
+                'jumlah_titik' => $item->jumlah_titik,
+                'coords' => $coords
+            ];
+        });
+
+        return response()->json($final);
+    }
+
     public function ruasDetail($id)
     {
         $item = RuasJalan::where('id_ruasjln', $id)->first();

@@ -59,10 +59,6 @@
         <span class="material-symbols-outlined text-[18px]">download</span>
         Export Data
         </button>
-        <button class="flex items-center gap-2 h-10 px-5 rounded-full bg-primary text-white hover:bg-primary-dark transition-all text-sm font-bold shadow-lg shadow-primary/30 hover:shadow-primary/40">
-        <span class="material-symbols-outlined text-[18px]">add</span>
-        Tambah Data
-        </button>
     </div>
     </div>
 
@@ -109,7 +105,7 @@
 
     // Set map center to Lampung Timur, Indonesia
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© diskominfo.lampungtimurkab.go.id',
+        attribution: 'lampungtimurkab.go.id',
         maxZoom: 19
     }).addTo(map);
 
@@ -244,7 +240,7 @@
     <div class="flex flex-col lg:flex-row gap-4 justify-between items-center bg-surface border border-border-light p-2 rounded-xl shadow-sm">
     <div class="flex gap-2 overflow-x-auto w-full lg:w-auto px-2 pb-2 lg:pb-0 scrollbar-hide">
         <button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary text-white px-4 text-sm font-semibold shadow-sm transition-transform active:scale-95">
-        <span>All Segments</span>
+        <span>Semua</span>
         </button>
         <button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white border border-border-light hover:bg-gray-50 text-text-muted hover:text-text-main px-4 text-sm transition-colors">
         <span>High Priority</span>
@@ -261,7 +257,7 @@
     </div>
     <div class="w-full lg:w-auto flex items-center bg-gray-50 rounded-full px-3 h-10 border border-transparent focus-within:border-primary focus-within:bg-white focus-within:shadow-sm mx-2 lg:mx-0 transition-all">
         <span class="material-symbols-outlined text-text-muted text-[20px]">filter_list</span>
-        <input class="bg-transparent border-none text-sm text-text-main placeholder-text-muted focus:ring-0 w-full lg:w-64 h-full" placeholder="Filter by keywords..." type="text" />
+        <input class="bg-transparent border-none text-sm text-text-main placeholder-text-muted focus:ring-0 w-full lg:w-64 h-full" placeholder="Cari ruasjalan..." type="text" id="searchInputRuas" />
     </div>
     </div>
 
@@ -280,7 +276,7 @@
             <th class="p-4 whitespace-nowrap">Jumlah Titik</th>
             </tr>
         </thead>
-        <tbody class="text-text-main text-sm divide-y divide-border-light">
+        <tbody id="ruasjalanTable" class="text-text-main text-sm divide-y divide-border-light">
             @foreach($datas as $item)
 
             <tr class="hover:bg-primary-light/30 transition-colors group cursor-pointer">
@@ -327,3 +323,54 @@
     </div>
     </div>
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+
+    $('#searchInputRuas').on('keyup', function() {
+        var query = $(this).val();
+        $.ajax({
+        url: '/api/ruasjalan/search',
+        method: 'GET',
+        data: { query: query },
+        success: function(data) {
+            // Update the table with the search results
+            // Assuming you have a function to update the table
+            updateTable(data);
+        },
+        error: function() {
+            console.error('Error fetching search results');
+        }
+        });
+    });
+    });
+
+    function updateTable(data) {
+    // Clear existing rows
+    $('tbody#ruasjalanTable').empty();
+    // Append new rows based on the search results
+    data.forEach(function(item) {
+        $('tbody#ruasjalanTable').append(`
+        <tr class="hover:bg-primary-light/30 transition-colors group cursor-pointer">
+            <td class="p-4">
+                <a href="/detail/${item.id_ruasjln}" target="_blank" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors text-sm font-medium border border-blue-200">
+                <span class="material-symbols-outlined text-[18px]">visibility</span>
+                Detail
+                </a>
+            </td>
+            <td class="p-4 font-semibold text-text-main">${item.nama_ruasjln}</td>
+            <td class="p-4 text-text-muted">${item.panjang_jln}</td>
+            <td class="p-4 font-medium">${item.id_fungsijln}</td>
+            <td class="p-4">${item.kec_jalan}</td>
+            <td class="p-4">
+                <span class="px-2.5 py-1 rounded-md bg-green-50 text-green-600 border border-green-100 text-xs font-semibold">${item.wilayah}</span>
+            </td>
+            <td class="p-4 font-mono">${item.no_ruasjln}</td>
+            <td class="p-4 text-center">${item.jumlah_titik}</td>
+        </tr>
+        `);
+    });
+    }
+</script>

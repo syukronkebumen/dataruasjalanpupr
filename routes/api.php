@@ -9,7 +9,7 @@ Route::get('/ruasjalan/detail/{id}', [DataRuasJalanController::class, 'ruasDetai
 Route::get('/batas-wilayah', [DataRuasJalanController::class, 'batasWilayah']);
 Route::get('/batas-kecamatan', [DataRuasJalanController::class, 'batasKecamatan']);
 Route::get('/batas-kelurahan', [DataRuasJalanController::class, 'batasKelurahan']);
-
+Route::get('/ruasjalan/search', [DataRuasJalanController::class, 'search']);
 // Jembatan
 Route::get('/jembatan/list', [JembatanController::class, 'list']);
 Route::get('/jembatan/search', [JembatanController::class, 'search']);
