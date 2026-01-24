@@ -96,18 +96,6 @@
           <a class="text-sm font-medium px-3 py-1.5 rounded-full transition-colors href="#">Settings</a>
         </nav>
       </div>
-      <div class="flex items-center gap-6">
-        <div class="hidden lg:flex items-center bg-surface-highlight border border-transparent hover:border-border-light rounded-full px-4 h-10 w-64 focus-within:border-primary focus-within:bg-white focus-within:shadow-soft transition-all duration-300">
-          <span class="material-symbols-outlined text-text-muted text-[20px]">search</span>
-          <input class="bg-transparent border-none text-sm text-text-main placeholder-text-muted focus:ring-0 w-full h-full" placeholder="Search ID or Region..." type="text" />
-        </div>
-        <button class="relative text-text-muted hover:text-primary transition-colors p-2 hover:bg-surface-highlight rounded-full">
-          <span class="material-symbols-outlined">notifications</span>
-          <span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-surface"></span>
-        </button>
-        <div class="h-10 w-10 rounded-full bg-cover bg-center border-2 border-white shadow-sm cursor-pointer ring-2 ring-transparent hover:ring-primary/20 transition-all" data-alt="User profile avatar image showing a person smiling" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuArmfQJt5-eRKu2lLRoPSNFpn7bKtWEJu2Rj8swMobdAZzEQkmcLKZC_e902-tuC02hoVDK1MxlpbCE6VCKOu0h3BABSPN5xJKuHRARwTgsekID464BUt9gdzDyyUG8wSFqA7aurinMTcjk8EM4296SZa2P8oQqdj93WbQEyONL1F4dQvgZklrrdCFIyHrYjVc9yIlsipseMMUuiePRSpvJFmaucy-0aSA7ZK-5T07E97-FQqocJX2bjPRiBYH1LG1Ygx0q4jw9BxqO");'>
-        </div>
-      </div>
     </div>
   </header>
   <main class="flex-1 flex justify-center py-8 px-4 lg:px-8">
