@@ -1,67 +1,52 @@
 @extends('landingpage')
 
 @section('content')
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-    <div class="flex flex-col gap-4 p-6 rounded-xl bg-surface shadow-card relative overflow-hidden group hover:shadow-md transition-shadow">
-        <div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-        <span class="material-symbols-outlined text-6xl text-primary">route</span>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div class="flex flex-col gap-4 p-6 rounded-xl bg-surface shadow-card relative overflow-hidden group hover:shadow-md transition-shadow">
+            <div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+            <span class="material-symbols-outlined text-6xl text-primary">route</span>
+            </div>
+            <div class="flex items-center gap-2 text-primary">
+            <span class="bg-primary/10 p-1 rounded text-primary">
+                <span class="material-symbols-outlined text-xl block">timeline</span>
+            </span>
+            <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Total Panjang</span>
+            </div>
+            <p class="text-3xl font-bold text-text-main"> {{ $totalPanjangFull }} <span class="text-lg text-text-muted font-normal">km</span></p>
+            <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
+            <div class="bg-primary h-1.5 rounded-full" style="width: 75%"></div>
+            </div>
         </div>
-        <div class="flex items-center gap-2 text-primary">
-        <span class="bg-primary/10 p-1 rounded text-primary">
-            <span class="material-symbols-outlined text-xl block">timeline</span>
-        </span>
-        <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Total Panjang</span>
+        <div class="flex flex-col gap-4 p-6 rounded-xl bg-surface shadow-card relative overflow-hidden group hover:shadow-md transition-shadow">
+            <div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+            <span class="material-symbols-outlined text-6xl text-blue-500">traffic</span>
+            </div>
+            <div class="flex items-center gap-2 text-blue-500">
+            <span class="bg-blue-50 p-1 rounded text-blue-500">
+                <span class="material-symbols-outlined text-xl block">speed</span>
+            </span>
+            <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Indeks Kemantapan</span>
+            </div>
+            <p class="text-3xl font-bold text-text-main">{{ $indeksKemantapan }}% <span class="text-lg text-text-muted font-normal"></span></p>
+            <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
+            <div class="bg-blue-400 h-1.5 rounded-full" style="width: 85%"></div>
+            </div>
         </div>
-        <p class="text-3xl font-bold text-text-main"> {{ $totalPanjangFull }} <span class="text-lg text-text-muted font-normal">km</span></p>
-        <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
-        <div class="bg-primary h-1.5 rounded-full" style="width: 75%"></div>
+        <div class="flex flex-col gap-4 p-6 rounded-xl bg-surface shadow-card relative overflow-hidden group hover:shadow-md transition-shadow">
+            <div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+            <span class="material-symbols-outlined text-6xl text-purple-500">verified</span>
+            </div>
+            <div class="flex items-center gap-2 text-purple-500">
+            <span class="bg-purple-50 p-1 rounded text-purple-500">
+                <span class="material-symbols-outlined text-xl block">check_circle</span>
+            </span>
+            <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Jumlah Jembatan</span>
+            </div>
+            <p class="text-3xl font-bold text-text-main">{{ $totalJembatan }} buah</span></p>
+            <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
+            <div class="bg-purple-400 h-1.5 rounded-full" style="width: 90%"></div>
+            </div>
         </div>
-    </div>
-    <div class="flex flex-col gap-4 p-6 rounded-xl bg-surface shadow-card relative overflow-hidden group hover:shadow-md transition-shadow">
-        <div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-        <span class="material-symbols-outlined text-6xl text-orange-500">warning</span>
-        </div>
-        <div class="flex items-center gap-2 text-orange-500">
-        <span class="bg-orange-50 p-1 rounded text-orange-500">
-            <span class="material-symbols-outlined text-xl block">construction</span>
-        </span>
-        <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Ruas Jalan</span>
-        </div>
-        <p class="text-3xl font-bold text-text-main">{{ $countRuasJalan }} <span class="text-lg text-text-muted font-normal">ruas</span></p>
-        <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
-        <div class="bg-orange-400 h-1.5 rounded-full" style="width: 12%"></div>
-        </div>
-    </div>
-    <div class="flex flex-col gap-4 p-6 rounded-xl bg-surface shadow-card relative overflow-hidden group hover:shadow-md transition-shadow">
-        <div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-        <span class="material-symbols-outlined text-6xl text-blue-500">traffic</span>
-        </div>
-        <div class="flex items-center gap-2 text-blue-500">
-        <span class="bg-blue-50 p-1 rounded text-blue-500">
-            <span class="material-symbols-outlined text-xl block">speed</span>
-        </span>
-        <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Indeks Kemantapan</span>
-        </div>
-        <p class="text-3xl font-bold text-text-main">{{ $indeksKemantapan }}% <span class="text-lg text-text-muted font-normal"></span></p>
-        <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
-        <div class="bg-blue-400 h-1.5 rounded-full" style="width: 85%"></div>
-        </div>
-    </div>
-    <div class="flex flex-col gap-4 p-6 rounded-xl bg-surface shadow-card relative overflow-hidden group hover:shadow-md transition-shadow">
-        <div class="absolute right-0 top-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-        <span class="material-symbols-outlined text-6xl text-purple-500">verified</span>
-        </div>
-        <div class="flex items-center gap-2 text-purple-500">
-        <span class="bg-purple-50 p-1 rounded text-purple-500">
-            <span class="material-symbols-outlined text-xl block">check_circle</span>
-        </span>
-        <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Jalan Baik</span>
-        </div>
-        <p class="text-3xl font-bold text-text-main">{{ $totalJalanBaik }} km</span></p>
-        <div class="w-full bg-gray-100 h-1.5 rounded-full mt-1">
-        <div class="bg-purple-400 h-1.5 rounded-full" style="width: 90%"></div>
-        </div>
-    </div>
     </div>
     
     <div class="flex flex-col xl:flex-row gap-6 justify-between items-start xl:items-end">
