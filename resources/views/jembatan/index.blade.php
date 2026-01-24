@@ -287,7 +287,7 @@
     <p class="text-text-muted text-lg">source : Dinas PUPR Lampung Timur.</p>
 </div>
 
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mt-6">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8 mt-4">
     <div class="bg-surface border border-border-light rounded-xl p-4 md:p-6 shadow-card">
         <h3 class="text-base md:text-lg font-bold text-text-main mb-4">Kondisi Jembatan</h3>
         <div class="h-64">
@@ -305,33 +305,31 @@
                     </tr>
                 </thead>
                 <tbody class="text-text-main divide-y divide-border-light">
+                    @php
+                        $colors = [
+                            'BAIK' => '#27f00c',
+                            'SEDANG' => '#fecc5c',
+                            'RUSAK RINGAN' => '#fd8d3c',
+                            'RUSAK BERAT' => '#fc0505',
+                            'RUNTUH' => '#940404'
+                        ];
+                        $total = array_sum($kondisiCounts->toArray());
+                    @endphp
+                    @foreach ($kondisiCounts as $kondisi => $jumlah)
+                        @php $persentase = round(($jumlah / $total) * 100, 2); @endphp
+                        <tr class="hover:bg-gray-50/50 transition-colors">
+                            <td class="p-3 md:p-4"><span class="inline-flex items-center gap-2"><span class="w-2 h-2 md:w-3 md:h-3 rounded-full" style="background-color: {{ $colors[$kondisi] }};"></span><span>{{ $kondisi }}</span></span></td>
+                            <td class="p-3 md:p-4 text-right md:text-left">{{ $jumlah }}</td>
+                            <td class="p-3 md:p-4 text-right">{{ $persentase }}%</td>
+                        </tr>
+                    @endforeach
                     <tr class="hover:bg-gray-50/50 transition-colors">
-                        <td class="p-3 md:p-4"><span class="inline-flex items-center gap-2"><span class="w-2 h-2 md:w-3 md:h-3 rounded-full" style="background-color: #2ecc71;"></span><span>Baik</span></span></td>
-                        <td class="p-3 md:p-4 text-right md:text-left">45</td>
-                        <td class="p-3 md:p-4 text-right">45%</td>
-                    </tr>
-                    <tr class="hover:bg-gray-50/50 transition-colors">
-                        <td class="p-3 md:p-4"><span class="inline-flex items-center gap-2"><span class="w-2 h-2 md:w-3 md:h-3 rounded-full" style="background-color: #f39c12;"></span>Cukup</span></td>
-                        <td class="p-3 md:p-4 text-right md:text-left">28</td>
-                        <td class="p-3 md:p-4 text-right">28%</td>
-                    </tr>
-                    <tr class="hover:bg-gray-50/50 transition-colors">
-                        <td class="p-3 md:p-4"><span class="inline-flex items-center gap-2"><span class="w-2 h-2 md:w-3 md:h-3 rounded-full" style="background-color: #e74c3c;"></span>Rusak Ringan</span></td>
-                        <td class="p-3 md:p-4 text-right md:text-left">18</td>
-                        <td class="p-3 md:p-4 text-right">18%</td>
-                    </tr>
-                    <tr class="hover:bg-gray-50/50 transition-colors">
-                        <td class="p-3 md:p-4"><span class="inline-flex items-center gap-2"><span class="w-2 h-2 md:w-3 md:h-3 rounded-full" style="background-color: #c0392b;"></span>Rusak Berat</span></td>
-                        <td class="p-3 md:p-4 text-right md:text-left">9</td>
-                        <td class="p-3 md:p-4 text-right">9%</td>
-                    </tr>
-                    <tr class="bg-gray-50/80 border-t-2 border-border-light font-semibold">
-                        <td class="p-3 md:p-4">Total</td>
-                        <td class="p-3 md:p-4 text-right md:text-left">100</td>
-                        <td class="p-3 md:p-4 text-right">100%</td>
+                        <td class="p-3 md:p-4 font-bold">Total</td>
+                        <td class="p-3 md:p-4 text-right md:text-left">{{ $total }}</td>
+                        <td class="p-3 md:p-4 text-right">{{ round(($total / $total) * 100, 2) }}%</td>
                     </tr>
                 </tbody>
-            </table>
+            </table> 
         </div>
     </div>
 </div>
@@ -343,10 +341,10 @@
     new Chart(conditionCtx, {
         type: 'doughnut',
         data: {
-            labels: ['Baik', 'Cukup', 'Rusak Ringan', 'Rusak Berat'],
+            labels: ['BAIK', 'SEDANG', 'RUSAK RINGAN', 'RUSAK BERAT', 'RUNTUH'],
             datasets: [{
-                data: [45, 28, 18, 9],
-                backgroundColor: ['#2ecc71', '#f39c12', '#e74c3c', '#c0392b'],
+                data: [{{ $kondisiCounts['BAIK'] ?? 0 }}, {{ $kondisiCounts['SEDANG'] ?? 0 }}, {{ $kondisiCounts['RUSAK RINGAN'] ?? 0 }}, {{ $kondisiCounts['RUSAK BERAT'] ?? 0 }}, {{ $kondisiCounts['RUNTUH'] ?? 0 }}],
+                backgroundColor: ['#27f00c', '#fecc5c', '#fd8d3c', '#fc0505', '#940404'],
                 borderColor: '#fff',
                 borderWidth: 2
             }]
@@ -421,6 +419,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{ $datas->links() }}
     </div>
 
 </div>

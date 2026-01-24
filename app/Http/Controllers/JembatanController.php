@@ -21,7 +21,8 @@ class JembatanController extends Controller
                             'tb_kemantapan_jemb.tipe_lantai',
                             'tb_kemantapan_jemb.kondisi_jemb'
                             );
-
+        $isData = $dataJembatan->get();
+        $kondisiCounts = $isData->groupBy('kondisi_jemb')->map->count();
         $datas = $dataJembatan->paginate(10);
         $dataJembatan = $dataJembatan->count();
         $totalJembatan = $dataJembatan;
@@ -33,7 +34,8 @@ class JembatanController extends Controller
         return view('jembatan.index', compact(
             'datas',
             'totalJembatan',
-            'indeksKemantapan'
+            'indeksKemantapan',
+            'kondisiCounts'
         ));
     }
 
