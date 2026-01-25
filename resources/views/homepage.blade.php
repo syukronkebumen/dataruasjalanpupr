@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIJJ - Sistem Informasi Jalan & Jembatan</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/logo/logo.png') }}">
     <style>
         * {
             margin: 0;
@@ -200,7 +201,12 @@
     <!-- Header -->
     <header>
         <nav>
-            <div class="logo"><a href="#hero" style="text-decoration: none;">🛣️</a> SIJJ</div>
+            <div class="logo">
+                <a href="/" style="text-decoration: none; display: flex; align-items: center; gap: 0.5rem; color: white;">
+                    <img src="{{ asset('img/logo/logo.png') }}" alt="SIJJ Logo" style="height: 2rem;">
+                    SIJJ
+                </a>
+            </div>
             <ul class="nav-links">
                 <li><a href="#fitur">Fitur</a></li>
                 <li><a href="#statistik">Statistik</a></li>
