@@ -7,7 +7,8 @@ use App\Models\Kemantapan;
 use App\Models\KetMantap;
 use App\Models\RuasJalan;
 use Illuminate\Http\Request;
-use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class DataRuasJalanController extends Controller
 {
@@ -90,6 +91,41 @@ class DataRuasJalanController extends Controller
         });
 
         return response()->json($final);
+    }
+
+    public function export()
+    {
+        $data = RuasJalan::all();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Set header
+        $sheet->setCellValue('A1', 'ID Ruas Jalan');
+        $sheet->setCellValue('B1', 'Nama Ruas Jalan');
+        $sheet->setCellValue('C1', 'Panjang Jalan (m)');
+        $sheet->setCellValue('D1', 'Fungsi Jalan');
+        $sheet->setCellValue('E1', 'Kecamatan');
+        $sheet->setCellValue('G1', 'No Ruas Jalan');
+
+        // Fill data
+        $row = 2;
+        foreach ($data as $item) {
+            $sheet->setCellValue("A{$row}", $item->id_ruasjln);
+            $sheet->setCellValue("B{$row}", $item->nama_ruasjln);
+            $sheet->setCellValue("C{$row}", $item->panjang_jln);
+            $sheet->setCellValue("D{$row}", $item->id_fungsijln);
+            $sheet->setCellValue("E{$row}", $item->kec_jalan);
+            $sheet->setCellValue("G{$row}", $item->no_ruasjln);
+            $row++;
+        }
+
+        // Create writer and output to browser
+        $writer = new Xlsx($spreadsheet);
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="ruas_jalan.xlsx"');
+        $writer->save('php://output');
+        exit;
     }
 
     public function ruasDetail($id)

@@ -55,10 +55,14 @@
         <p class="text-text-muted text-lg">Data mengenai ruas jalan dan kondisi infrastruktur di Lampung Timur.</p>
     </div>
     <div class="flex gap-3">
-        <button class="flex items-center gap-2 h-10 px-5 rounded-full bg-white border border-border-light text-text-main hover:bg-surface-highlight hover:border-gray-300 transition-all text-sm font-medium shadow-sm">
-        <span class="material-symbols-outlined text-[18px]">download</span>
-        Export Data
+        <button class="flex items-center gap-2 h-10 px-5 rounded-full bg-white border border-border-light text-text-main hover:bg-surface-highlight hover:border-gray-300 transition-all text-sm font-medium shadow-sm" onclick="exportToExcel()">
+            <span class="material-symbols-outlined text-[18px]">download</span>
+            Export Data
         </button>
+
+        <script>
+        
+        </script>
     </div>
     </div>
 
@@ -372,5 +376,30 @@
         </tr>
         `);
     });
+    }
+
+    // Export to Excel function
+    function exportToExcel() {
+        fetch('/api/ruasjalan/export', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `Data_Ruas_Jalan_${new Date().toISOString().split('T')[0]}.xlsx`);
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('Error exporting data:', error);
+            alert('Gagal mengekspor data');
+        });
     }
 </script>
