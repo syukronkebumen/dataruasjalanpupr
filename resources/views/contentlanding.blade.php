@@ -265,51 +265,8 @@
     </div>
     </div>
 
-    <div class="bg-surface border border-border-light rounded-xl overflow-hidden flex flex-col shadow-card">
-    <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
-        <thead>
-            <tr class="bg-gray-50/80 border-b border-border-light text-text-muted text-xs uppercase tracking-wider font-semibold">
-            <th class="p-4 whitespace-nowrap">Aksi</th>
-            <th class="p-4 whitespace-nowrap">Nama</th>
-            <th class="p-4 whitespace-nowrap">Panjang (m)</th>
-            <th class="p-4 whitespace-nowrap">Fungsi</th>
-            <th class="p-4 whitespace-nowrap">Kecamatan</th>
-            <th class="p-4 whitespace-nowrap">Wilayah</th>
-            <th class="p-4 whitespace-nowrap">No Ruas</th>
-            <th class="p-4 whitespace-nowrap">Jumlah Titik</th>
-            </tr>
-        </thead>
-        <tbody id="ruasjalanTable" class="text-text-main text-sm divide-y divide-border-light">
-            @foreach($datas as $item)
-
-            <tr class="hover:bg-primary-light/30 transition-colors group cursor-pointer">
-            <td class="p-4">
-                <a href="/detail/{{ $item->id_ruasjln }}" target="_blank" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors text-sm font-medium border border-blue-200">
-                <span class="material-symbols-outlined text-[18px]">visibility</span>
-                Detail
-                </a>
-            </td>
-            <td class="p-4 font-semibold text-text-main">{{ $item['nama_ruasjln'] }}</td>
-            <td class="p-4 text-text-muted">{{ $item['panjang_jln'] }}</td>
-            <td class="p-4 font-medium">{{ $item['id_fungsijln'] }}</td>
-            <td class="p-4">{{ $item['kec_jalan'] }}</td>
-            <td class="p-4">
-                <span class="px-2.5 py-1 rounded-md bg-green-50 text-green-600 border border-green-100 text-xs font-semibold">{{ $item['wilayah'] }}</span>
-            </td>
-            <td class="p-4 font-mono">{{ $item['no_ruasjln'] }}</td>
-            <td class="p-4 text-center">{{ $item['jumlah_titik'] }}</td>
-            </tr>
-            @endforeach
-        </tbody>
-        </table>
-    </div>
-    <div class="flex flex-col sm:flex-row justify-between items-center p-4 border-t border-border-light gap-4 bg-gray-50/50">
-        <p class="text-sm text-text-muted">Showing <span class="text-text-main font-semibold">{{ $datas->firstItem() }}</span> to <span class="text-text-main font-semibold">{{ $datas->lastItem() }}</span> of <span class="text-text-main font-semibold">{{ $datas->total() }}</span> segments</p>
-        <div class="flex items-center gap-2">
-        {{ $datas->links('pagination::tailwind') }}
-        </div>
-    </div>
+    <div id="data-wrapper">
+        @include('landingpage.partials.list')
     </div>
             
     <div class="w-full h-48 rounded-2xl overflow-hidden relative border border-border-light mt-4 shadow-card">
@@ -402,4 +359,33 @@
             alert('Gagal mengekspor data');
         });
     }
+
+    // pagination
+    $(document).on('click', 'nav[aria-label="Pagination Navigation"] a[href]', function(e) {
+        e.preventDefault();
+
+        let url = $(this).attr('href');
+
+        $.ajax({
+            url: url,
+            type: "GET",
+
+            beforeSend: function () {
+                $('#data-wrapper').html(`
+                    <div class="flex justify-center py-6">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+                    </div>
+                `);
+            },
+
+            success: function(data) {
+                $('#data-wrapper').html(data);
+                window.history.pushState("", "", url);
+            },
+            error: function(e) {
+                console.error('Gagal load data:', e);
+                alert('Gagal load data');
+            }
+        });
+    });
 </script>

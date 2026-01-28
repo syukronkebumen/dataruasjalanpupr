@@ -63,7 +63,7 @@ class DataRuasJalanController extends Controller
         $data = RuasJalan::where('nama_ruasjln', 'LIKE', "%{$query}%")
             ->orWhere('kec_jalan', 'LIKE', "%{$query}%")
             ->orWhere('wilayah', 'LIKE', "%{$query}%")
-            ->get();
+            ->paginate(10);
 
         $final = $data->map(function ($item) {
 
@@ -209,9 +209,14 @@ class DataRuasJalanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function landingpage()
+    public function landingpage(Request $request)
     {
-        $datas = RuasJalan::orderBy('no_ruasjln', 'ASC')->paginate(20);
+        $datas = RuasJalan::orderBy('no_ruasjln', 'ASC')->paginate(10);
+
+        if ($request->ajax()) {
+            return view('landingpage.partials.list', compact('datas'))->render();
+        }
+
         $totalPanjang = RuasJalan::sum('panjang_jln');
         $panjangJalanKM = $totalPanjang / 1000;
         $countRuasJalan = RuasJalan::count();
