@@ -14,3 +14,6 @@ Route::get('/ruasjalan/export', [DataRuasJalanController::class, 'export']);
 // Jembatan
 Route::get('/jembatan/list', [JembatanController::class, 'list']);
 Route::get('/jembatan/search', [JembatanController::class, 'search']);
+
+// News
+Route::get('/news', [App\Http\Controllers\NewsController::class, 'index']);

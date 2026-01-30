@@ -394,7 +394,7 @@
     //berita
     function loadArtikel() {
         $.ajax({
-            url: 'https://newsapi.org/v2/everything?domains=wsj.com&apiKey=a61f73c05d544b1ea5b8d791f3ab5579',
+            url: '/api/news',
             method: 'GET',
             success: function(data) {
                 let html = '';
