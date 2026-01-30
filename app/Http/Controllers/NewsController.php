@@ -10,7 +10,7 @@ class NewsController extends Controller
     public function index()
     {
         $response = Http::withHeaders([
-            'User-Agent' => 'MyApp/1.0'
+            'User-Agent' => 'Laravel/10 NewsApp'
         ])->get('https://newsapi.org/v2/everything', [
             'domains' => 'wsj.com',
             'apiKey' => env('NEWS_API_KEY'),
