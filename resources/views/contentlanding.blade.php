@@ -269,27 +269,29 @@
         @include('landingpage.partials.list')
     </div>
             
-    <div class="w-full h-48 rounded-2xl overflow-hidden relative border border-border-light mt-4 shadow-card">
-    <div class="absolute inset-0 bg-cover bg-center transition-all duration-700 hover:scale-105" data-alt="Map view showing road networks with heatmaps overlaid on city streets" data-location="Toronto" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuASDfGZvelAlpriNvt4bHUkbl4dq0R-H-FiVJ4mUpc05kjh5YmFvLhl1sNDEQa1qpGRj4TOjUDEfJgEXHrYXXYfOIeN8s8aHF29G7Jh0TrxTb3t1nhb7okwzgapU3j4GHXxkmzHjLdU2bZdM9qyqTyXRoV66U9rXuDf1zvuj3mnNVEvVIEmV3Yu5PdYiXzzOo7mXsHraKn-IEn5iXkVEZ-fJsbvCHQEMZeFg81JED4eq-kvSII3MCzbvrtTcwFUo5IC9WA7tFBXxw_U");'>
-    </div>
-    <div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent flex items-center p-8 lg:p-12">
-        <div class="flex flex-col gap-4 max-w-lg">
-        <h3 class="text-2xl font-bold text-text-main">Geospatial Overview</h3>
-        <p class="text-text-muted font-medium">Switch to map view to visualize road conditions, traffic incidents, and maintenance crews in real-time across the entire network.</p>
-        <button class="w-fit flex items-center gap-2 px-5 py-2.5 rounded-full bg-white hover:bg-gray-50 text-primary border border-primary/20 hover:border-primary/50 shadow-sm transition-all text-sm font-bold">
-            <span class="material-symbols-outlined">map</span>
-            Launch Map View
-        </button>
+    <div class="flex flex-col xl:flex-row gap-6 justify-between items-start xl:items-end">
+        <div class="flex flex-col gap-2">
+            <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-text-main">Artikel Terbaru</h1>
+            <p class="text-text-muted text-lg">Berita dan artikel Mancanegara.</p>
         </div>
     </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div id="artikel-wrapper" class="contents">
+            <div class="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center py-6">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            </div>
+        </div>
     </div>
+    
+
 @endsection
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
-
+    loadArtikel();
     $('#searchInputRuas').on('keyup', function() {
         var query = $(this).val();
         $.ajax({
@@ -388,4 +390,47 @@
             }
         });
     });
+
+    //berita
+    function loadArtikel() {
+        $.ajax({
+            url: 'https://newsapi.org/v2/everything?domains=wsj.com&apiKey=a61f73c05d544b1ea5b8d791f3ab5579',
+            method: 'GET',
+            success: function(data) {
+                let html = '';
+                if(data.articles.length > 0) {
+                    data.articles.forEach(function(item) {
+                        if (item.urlToImage === null) {
+                            html += '';
+                        }else{
+                            html += `
+                                <div class="bg-surface rounded-xl shadow-card overflow-hidden hover:shadow-lg transition-shadow">
+                                    <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                                        <img src="${item.urlToImage}" alt="${item.title}" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="p-6 flex flex-col gap-3">
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-xs font-semibold text-white bg-blue-500 px-3 py-1 rounded-full">Berita</span>
+                                            <span class="text-xs text-text-muted">${new Date(item.publishedAt).toLocaleDateString('id-ID')}</span>
+                                        </div>
+                                        <h3 class="text-lg font-bold text-text-main"><a target="_blank" href="${item.url}">${item.title}</a></h3>
+                                        <p class="text-text-muted text-sm line-clamp-2">${item.description}</p>
+                                        <a target="_blank" href="${item.url}" class="mt-2 text-blue-600 font-semibold text-sm hover:text-blue-700 flex items-center gap-1">
+                                            Baca selengkapnya <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    });
+                } else {
+                    html = '<p class="text-text-muted">Tidak ada artikel tersedia</p>';
+                }
+                $('#artikel-wrapper').html(html);
+            },
+            error: function() {
+                $('#artikel-wrapper').html('<p class="text-red-500">Gagal memuat artikel</p>');
+            }
+        });
+    }
 </script>
